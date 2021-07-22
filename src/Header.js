@@ -6,15 +6,25 @@ import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount"
 import BusinessCenterIcon from "@material-ui/icons/BusinessCenter"
 import ChatIcon from "@material-ui/icons/Chat"
 import NotificationsIcon from "@material-ui/icons/Notifications"
+import { useDispatch } from "react-redux"
+import { logout } from "./features/userSlice"
+import { auth } from "./firebase"
 
 const Header = () => {
+    const dispatch = useDispatch();
+
+    const handleLogout = () => {
+        dispatch(logout());
+        auth.signOut();
+    }
+
     return (
         <div className="header">
             <div className="header__left">
                 <img src="https://cdn3.iconfinder.com/data/icons/inficons/512/linkedin.png" alt="" />
                 <div className="header__search">
                     <SearchIcon />
-                    <input type="text" />
+                    <input type="text" placeholder="Search" />
                 </div>
             </div>
             <div className="header__right">
@@ -23,7 +33,7 @@ const Header = () => {
                 <HeaderOption Icon={BusinessCenterIcon} title="Jobs" />
                 <HeaderOption Icon={ChatIcon} title="Messaging" />
                 <HeaderOption Icon={NotificationsIcon} title="Notifications" />
-                <HeaderOption avatar="https://i.pinimg.com/originals/64/c6/5d/64c65d98c363b0c88a3c8ffeba736991.png" title="ME" />
+                <HeaderOption avatar={true} title="ME" onClick={handleLogout} />
             </div>
         </div>
     )
